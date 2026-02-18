@@ -137,6 +137,8 @@ Identified seasonal patterns and route bottlenecks highlight the need for target
 2. Merge infrastructure and construction schedules
 3. Develop a real-time prediction API (FastAPI)
 4. Explore sequential models (RNNs / LSTMs) for temporal dependency learning
+5. Design and implement a structured data pipeline for weather–infrastructure integration
+
 
 ---
 
