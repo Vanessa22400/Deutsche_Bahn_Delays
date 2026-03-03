@@ -77,6 +77,8 @@ The exploratory analysis revealed consistent patterns with direct operational im
 
 These findings guided formal hypothesis testing and the modeling strategy.
 
+![Total Cancellations by Day of the Week](Images/2.Total Cancellations by Day of the Week.png)
+
 ---
 
 ## Modeling Approach
