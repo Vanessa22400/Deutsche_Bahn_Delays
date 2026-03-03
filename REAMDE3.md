@@ -117,6 +117,15 @@ This analysis could support:
 
 ---
 
+## Next Steps
+
+- Integrate weather data (DWD)  
+- Merge construction logs (Baustellen)  
+- Develop lightweight prediction API  
+- Test Gradient Boosting models
+
+---
+
 ## Conclusion
 
 What started as a personal observation during my time commuting in Baden-Württemberg became a structured end-to-end analysis of railway performance.
