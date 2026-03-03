@@ -1,147 +1,182 @@
-#  Railway Delay Analysis — Germany (Tübingen Hbf)
-
-## Project Overview
-This project analyzes train delays at **Tübingen Hauptbahnhof (Germany)** using one full year of railway operation data.  
-The objective is to understand the structural drivers behind delays, explore the gap between passenger perception and official statistics, and evaluate how effectively delays can be modeled using Machine Learning.
-
-The project combines **Exploratory Data Analysis (EDA)**, **hypothesis testing**, **regression**, and **classification**, progressing from descriptive insights to risk-oriented prediction.
+# Railway Delay Analysis – Tübingen (Germany)
+From commuter experience to data-driven insights on punctuality, risk and reliability in the Deutsche Bahn network
 
 ---
 
-## Motivation & Context
-The motivation for this project comes from my personal experience living and commuting in the Tübingen region, where train delays are a recurring topic in daily passenger complaints.
+## Business Context
 
-While official statistics often report moderate average delays, passenger frustration remains consistently high.  
-This project investigates that discrepancy and asks a central question:
+Reliable public transportation is essential in Germany, especially for commuters and students who depend on trains for work, study, and daily life. Even small disruptions can affect connections, productivity, and passenger trust.
 
-> Why do delays feel worse than the numbers suggest?
+While living in the Tübingen region (Baden-Württemberg), I experienced frequent delays that were constantly discussed among passengers. However, official numbers often summarize performance using averages, which can hide daily friction and rare high-impact events.
 
-By combining data analysis with real-world commuting patterns, the project aims to translate everyday passenger experience into measurable and actionable insights.
+This project uses one full year of operational data from Tübingen Hbf to assess how delays behave over time, across services, and by destination, and to translate passenger perception into measurable, decision-oriented insights.
 
 ---
 
-## Business & Analytical Questions
-* Are delays mainly driven by rush hours, weekdays, or seasonal effects?
-* Do different train types (regional vs. express) behave differently under congestion?
-* Why do average delay metrics underestimate passenger frustration?
-* Is predicting exact delay minutes feasible?
-* Can a risk-based classification approach provide more reliable insights?
-* Which factors increase the likelihood of **critical delays (> 5 minutes)**?
+## Problem Statement
+
+How reliable is the railway service at Tübingen Hbf, and which operational factors are most associated with delays and higher delay risk?
 
 ---
 
-## Data Source
-* One full year of train operation data from **Tübingen Hbf**
-* Key variables include:
-  * Delay duration (minutes)
-  * Date and time features
-  * Train type (regional, express, long-distance)
-  * Final destination
-* External operational causes (weather, construction, technical failures) are **not explicitly included**, which becomes a key modeling limitation.
+## Objectives
+
+- Identify key drivers behind delay patterns and delay risk
+- Perform structured exploratory data analysis (EDA)
+- Validate common commuter perceptions using hypothesis testing
+- Engineer features aligned with operational context
+- Build and evaluate predictive models (regression and classification)
+- Translate findings into actionable insights for planning and communication
 
 ---
 
 ## Methodology
 
-### 1. Exploratory Data Analysis (EDA)
-* Distribution of delay durations
-* Rush hour vs. off-peak comparison
-* Weekday and seasonal patterns
-* Express vs. regional train behavior
-* Route-level comparisons
+1. Data Cleaning and Preprocessing  
+   Handling missing values, outliers, inconsistencies and data normalization when required.
 
-### 2. Feature Engineering
-* Temporal features: hour, day of week, month
-* Rush hour indicator
-* One-hot encoding for train types
-* Label encoding for destinations (tree-based model compatible)
+2. Exploratory Data Analysis (EDA)  
+   Identification of patterns, correlations, structural behaviors and potential risks.
 
-### 3. Regression Modeling
-* **Random Forest Regressor**
-* Goal: predict exact delay minutes
-* Evaluation metrics: **MAE**, **R²**
+3. Hypothesis Testing  
+   Statistical testing of recurring patterns (weekday effects, service-type differences).
 
-### 4. Strategic Pivot to Classification
-* Reframing the problem as:
-  * **Critical delay prediction (> 5 minutes)**
-* **Random Forest Classifier**
-* Focus on operational relevance rather than minute-level precision
+4. Feature Engineering  
+   Creation of variables based on domain logic and contextual interpretation.
+
+5. Model Selection and Validation  
+   Comparison of models using cross-validation and performance metrics.
+
+6. Insight Generation  
+   Translation of statistical results into operational or strategic recommendations.
 
 ---
 
-## Key Findings
-* **The Monday Effect**  
-  Hypothesis testing confirms that Mondays have significantly higher delays (*p < 0.05*), validating a common commuter perception.
+## Tools & Technologies
 
-* **Passenger Perception Gap**  
-  Although the overall average delay is relatively low (~3 minutes), delayed trains during rush hours exceed 5 minutes on average, explaining persistent dissatisfaction.
-
-* **Rush Hour Vulnerability**  
-  Peak periods amplify delays, especially when trains are already late, compounding network instability.
-
-* **Service-Type Differences**  
-  Express services exhibit higher average delays than regional trains, suggesting stronger exposure to network-wide disruptions.
-
-* **Spatial Bottlenecks**  
-  Routes heading south from Tübingen show more consistent delay patterns than routes toward Stuttgart, challenging common assumptions.
+- Python (Pandas, NumPy)
+- Scikit-learn
+- SciPy (Hypothesis Testing)
+- Statsmodels (Time Series Decomposition)
+- Matplotlib, Seaborn
+- Folium (Geospatial Visualization)
+- Data Source: Deutsche Bahn data (Hugging Face public repository)
+- Modeling: Random Forest Regressor, Random Forest Classifier
 
 ---
 
-## Modeling Results
+## Exploratory Data Analysis Highlights
 
-### Regression (Exact Delay Prediction)
-* **Mean Absolute Error (MAE):** 3.20 minutes  
-* **R² Score:** -0.04  
+The exploratory analysis revealed consistent patterns with direct operational implications:
 
-Despite a reasonable MAE, the negative R² indicates poor explanatory power and highlights the instability of predicting exact delay minutes.
+- **Perception gap:** 67.6% of services had some delay, even though the average delay was 3.23 minutes. This helps explain why everyday experience can feel worse than summary statistics.
+- **Tail risk:** delays are mostly small, but the distribution is strongly right-skewed (extreme events up to 331 minutes). Severe delays above 30 minutes represent 1.24% of delayed services, but drive disproportionate disruption.
+- **Monday fragility:** Mondays show the highest average delays and the highest concentration of cancellations, indicating a structurally more vulnerable start of the week.
+- **Service differences:** express services have higher average delays than regional services (longer routes, exposure to network-wide disruptions).
+- **Directional bottlenecks:** several southern and southeastern routes show higher average delays, while major hubs like Stuttgart appear comparatively more stable.
 
-### Classification (Critical Delay > 5 Minutes)
-* **Accuracy:** 82%  
-* **Precision (on-time class):** 86%  
-* **Recall (critical delay class):** 27%  
-
-The classification model provides a more stable and interpretable framework, despite the difficulty of capturing rare but high-impact disruptions.
+These findings guided formal hypothesis testing and the modeling strategy.
 
 ---
 
-## Why Regression Failed — and Why That Matters
-Exact delay prediction proved unreliable due to:
-* High influence of unobserved external events (weather, technical issues, construction)
-* Structural features explaining patterns, but not sudden disruptions
+## Modeling Approach
 
-This insight motivated a shift toward **risk-based modeling**, which aligns more closely with real passenger decision-making.
+This project uses two complementary predictive tasks aligned with practical decision needs:
 
----
+**Regression Task**  
+Focused on estimating expected delay minutes under typical operating conditions. To avoid extreme values distorting minute-level prediction, outliers are excluded from the regression training set.
 
-## Limitations
-* No weather or infrastructure maintenance data
-* No real-time operational variables
-* Class imbalance for critical delays
+**Classification Task**  
+Focused on identifying higher-risk scenarios using a critical delay definition (delay above 5 minutes). This framing is more actionable for planning and passenger communication, and better reflects operational risk management.
 
-These limitations reflect real-world data constraints rather than modeling shortcomings.
+Model choice prioritized **interpretability**, non-linear pattern capture, and alignment with real-world constraints.
 
 ---
 
-## Strategic Implications
+## Model Performance
 
-### For Passengers
-The high precision of on-time predictions suggests that a real-time **punctuality risk alert** could meaningfully support travel planning, especially for long-distance connections.
+**Regression (Predicting Delay Minutes)**
+- Mean Absolute Error (MAE): 3.20 minutes
+- R² Score: -0.0426
+ 
+Minute-level prediction is unstable because severe disruptions are often driven by external factors not present in the dataset (weather events, infrastructure incidents, technical failures). The low MAE reflects typical small delays, but the negative R² highlights the limits of predicting exact delay duration in a complex network.
 
-### For Infrastructure Planning
-Identified seasonal patterns and route bottlenecks highlight the need for targeted investments and improved winter resilience strategies.
+**Classification (Predicting Critical Delays > 5 minutes)**
+- Accuracy: 0.82
+- On-time precision (Class 0): 0.86
+- Critical delay recall (Class 1): 0.27
+ 
+The model is strong at confirming lower-risk situations (useful for passenger trust and baseline planning). Critical delays remain harder to capture due to unobserved drivers and the nature of rare disruptions. This is a data limitation more than a modeling limitation, and it is a realistic finding for operational systems.
+
+![Feature Importance](Images/feature_importance.png)
+
+---
+
+## Key Insights
+
+- Summary metrics can be misleading: the average delay looks moderate, but the majority of services experience some delay, which matches passenger perception.
+- **Mondays are consistently riskier:** both delay averages and cancellations peak early in the week, suggesting lower operational resilience.
+- **Rush hour amplifies disruption:** overall mean delay rises during peak times (3.83 vs. 2.77 minutes), and delayed services are more severe during rush hour (5.20 vs. 4.39 minutes).
+- Delay risk is more seasonal than hourly: month and weekday patterns carry more signal than the departure hour alone.
+- Reliability is not evenly distributed: certain directions and destinations show recurring bottlenecks, suggesting localized infrastructure constraints.
+
+---
+
+## Business Impact & Applications
+
+**Operational optimization**  
+Support targeted actions on high-risk days and periods, especially early-week operations.
+
+**Resource allocation**  
+Improve staffing, maintenance planning and contingency readiness where risk concentrates (weekday patterns, seasonal peaks, and bottleneck routes).
+
+**Risk mitigation**  
+Use risk-based classification outputs to flag likely critical delays and reduce cascading effects.
+
+**Strategic planning**  
+Identify structural vulnerabilities (seasonality, destination-level risk) to inform longer-term network improvements.
+
+**KPI monitoring**  
+Track stability beyond averages, using metrics such as delay incidence, cancellation rate, and critical delay risk rate over time.
 
 ---
 
 ## Next Steps
-1. Integrate historical weather data (DWD)
-2. Merge infrastructure and construction schedules
-3. Develop a real-time prediction API (FastAPI)
-4. Explore sequential models (RNNs / LSTMs) for temporal dependency learning
-5. Design and implement a structured data pipeline for weather–infrastructure integration
 
+- Integrate weather variables to quantify seasonal effects and improve critical-delay detection
+- Merge maintenance and construction logs (Baustellen) to separate planned vs. unexpected disruption
+- Test alternative models (boosting methods) and add explainability for stakeholder communication
+- Build a lightweight API for delay-risk alerts
+- Create a dashboard for monitoring weekday and route-level reliability trends
 
 ---
 
-## Final Notes
-This project demonstrates how Data Science can transform everyday commuter frustration into structured, data-driven insights.  
-Rather than focusing solely on prediction accuracy, it emphasizes **problem framing, analytical reasoning, and real-world relevance** — core skills for applied Data Science roles.
+## Repository Structure
+├── data
+
+├── notebooks
+
+├── images
+
+├── requirements.txt
+
+└── README.md  
+
+---
+
+## Strategic Perspective 
+I intentionally framed this project around the gap between what passengers feel and what official averages show. Instead of assuming perfect predictability, I tested where prediction breaks, why it breaks, and what can still be useful for decision-making.
+
+Living in different countries shaped how I approach analysis: I tend to question assumptions, pay attention to context, and connect patterns to real operational constraints. This project reflects that approach by combining technical modeling with practical interpretation and clear limitations.
+
+---
+
+## Conclusion
+
+This project turns everyday commuter experience in Baden-Württemberg into a structured end-to-end analysis of railway reliability at Tübingen Hbf.
+
+The results validate patterns passengers often discuss, quantify where risk concentrates, and show why predicting exact delay minutes is limited in complex networks. A risk-based approach provides more actionable value for planning, communication and monitoring.
+
+---
+
+
