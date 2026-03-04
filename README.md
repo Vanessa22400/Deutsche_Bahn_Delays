@@ -7,6 +7,10 @@
 
 ---
 
+**Project Series**: This study is the first stage of a two-part analysis of railway delays at Tübingen Hbf. The second project focuses on advanced machine learning models and explainability techniques.
+
+---
+
 ## Business Context
 
 Reliable public transportation is essential in Germany, especially for commuters and students who depend on trains for work, study, and daily life. Even small disruptions can affect connections, productivity, and passenger trust.
@@ -169,6 +173,14 @@ Track stability beyond averages, using metrics such as delay incidence, cancella
 I intentionally framed this project around the gap between what passengers feel and what official averages show. Instead of assuming perfect predictability, I tested where prediction breaks, why it breaks, and what can still be useful for decision-making.
 
 Living in different countries shaped how I approach analysis: I tend to question assumptions, pay attention to context, and connect patterns to real operational constraints. This project reflects that approach by combining technical modeling with practical interpretation and clear limitations.
+
+---
+## Next Project in the Series
+
+This analysis continues in the following project:
+
+**Railway Delay Modeling & Explainability - Tübingen (Germany)**  
+Advanced machine learning models and SHAP explainability applied to the same dataset to better understand delay drivers and predictive performance.
 
 ---
 
