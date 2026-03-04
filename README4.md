@@ -1,4 +1,4 @@
-# Railway Delay Analysis – Tübingen (Germany)
+# Railway Delay Analysis in Tübingen (Germany)
 From commuter experience to data-driven insights on punctuality, risk and reliability in the Deutsche Bahn network
 
 ---
