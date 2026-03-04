@@ -5,9 +5,9 @@
 **Techniques**: EDA, hypothesis testing, Random Forest models  
 **Key Result**: 82% accuracy in predicting critical delays
 
----
-
 **Project Series**: This study is the first stage of a two-part analysis of railway delays at Tübingen Hbf. The second project focuses on advanced machine learning models and explainability techniques.
+[View the next project](https://github.com/Vanessa22400/Railway_Delay_Advanced_Analysis_DB
+)
 
 ---
 
