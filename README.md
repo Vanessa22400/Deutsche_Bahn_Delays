@@ -175,6 +175,7 @@ Track stability beyond averages, using metrics such as delay incidence, cancella
 ## Next Steps
 
 - Integrate weather variables to quantify seasonal effects and improve critical-delay detection
+- Improve feature engineering for better representation of operational patterns
 - Merge maintenance and construction logs (Baustellen) to separate planned vs. unexpected disruption
 - Test alternative models (boosting methods) and add explainability for stakeholder communication
 - Build a lightweight API for delay-risk alerts
